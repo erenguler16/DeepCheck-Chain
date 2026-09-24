@@ -113,25 +113,46 @@ class _ShieldScreenState extends State<ShieldScreen>
   }
 
   Future<void> _saveToHistory(AnalysisResult result) async {
-    if (result.hashKodu == null) return;
-
     try {
+      // AI sonucu sahte diyorsa KESİNLİKLE mühürleme!
+      final bool isSealed;
+      if (result.isFake) {
+        isSealed = false; // AI Sahte dedi → ASLA mühürleme!
+      } else if (result.isAuthentic) {
+        isSealed = true; // AI Gerçek dedi → Blokzincirine mühürle
+      } else {
+        // AI tespit edememişse veya şüpheliyse mühürleme
+        isSealed = false;
+      }
+
       final prefs = await SharedPreferences.getInstance();
-      final List<String> history = prefs.getStringList('seal_history') ?? [];
+      final hash = result.hashKodu ?? 'HASH_HESAPLANAMADI';
 
       final record = jsonEncode({
-        'hash': result.hashKodu,
+        'hash': hash,
         'ai_sonucu': result.aiSonucu ?? 'Bilinmiyor',
         'guven_orani': result.guvenOrani ?? '-',
         'dosya_adi': result.dosyaAdi ?? '-',
         'zaman': result.zaman ?? DateTime.now().toIso8601String(),
         'is_authentic': result.isAuthentic,
+        'is_sealed': isSealed,
+        'image_path': _capturedFile?.path,
       });
 
-      history.insert(0, record);
-      if (history.length > 50) history.removeLast();
-
-      await prefs.setStringList('seal_history', history);
+      if (isSealed) {
+        // Gerçek fotoğraf → Blokzinciri Defteri (seal_history)
+        final List<String> history = prefs.getStringList('seal_history') ?? [];
+        history.insert(0, record);
+        if (history.length > 50) history.removeLast();
+        await prefs.setStringList('seal_history', history);
+      } else {
+        // Sahte veya şüpheli fotoğraf → Geçersiz İşlemler (rejected_history)
+        final List<String> rejected =
+            prefs.getStringList('rejected_history') ?? [];
+        rejected.insert(0, record);
+        if (rejected.length > 50) rejected.removeLast();
+        await prefs.setStringList('rejected_history', rejected);
+      }
     } catch (_) {}
   }
 
@@ -423,7 +444,9 @@ class _ShieldScreenState extends State<ShieldScreen>
   }
 
   Widget _buildSealBadge() {
-    final isOk = _result!.isAuthentic || _result!.isSuccess;
+    final isFake = _result!.isFake;
+    final isAuthentic = _result!.isAuthentic;
+    final isOk = !isFake && isAuthentic;
     final color = isOk ? AppColors.neonGreen : AppColors.neonRed;
 
     return Positioned(
@@ -452,7 +475,9 @@ class _ShieldScreenState extends State<ShieldScreen>
             ),
             const SizedBox(width: 6),
             Text(
-              isOk ? 'BLOKZİNCİRE MÜHÜRLENDİ' : 'MANİPÜLASYON UYARISI',
+              isOk
+                  ? 'BLOKZİNCİRE MÜHÜRLENDİ'
+                  : 'MANİPÜLASYON / REDDEDİLDİ',
               style: TextStyle(
                 fontFamily: AppTextStyles.fontMono,
                 fontSize: 9,
@@ -658,7 +683,15 @@ class _ShieldScreenState extends State<ShieldScreen>
   Widget _buildResultSection() {
     return Column(
       children: [
-        if (_result!.isAuthentic || _result!.isSuccess)
+        if (_result!.isFake)
+          NeonResultCard(
+            isAuthentic: false,
+            title: '❌ MANİPÜLASYON TESPİT EDİLDİ',
+            subtitle: 'Deepfake Tespit Edildi — Mühürleme Reddedildi',
+            hashCode_: _result!.hashKodu,
+            confidence: _result!.guvenOrani,
+          )
+        else if (_result!.isAuthentic)
           NeonResultCard(
             isAuthentic: true,
             title: '✅ GERÇEK VE ONAYLI',
@@ -666,20 +699,13 @@ class _ShieldScreenState extends State<ShieldScreen>
             hashCode_: _result!.hashKodu,
             confidence: _result!.guvenOrani,
           )
-        else if (_result!.isFake)
-          NeonResultCard(
-            isAuthentic: false,
-            title: '❌ MANİPÜLASYON TESPİT EDİLDİ',
-            subtitle: 'Deepfake Uyarısı',
-            hashCode_: _result!.hashKodu,
-            confidence: _result!.guvenOrani,
-          )
         else
           NeonResultCard(
-            isAuthentic: _result!.isSuccess,
-            title: _result!.isSuccess ? '✅ İŞLEM BAŞARILI' : '⚠️ SONUÇ',
+            isAuthentic: false,
+            title: _result!.isSuccess ? '⚠️ ŞÜPHELİ / BELİRSİZ' : '❌ İŞLEM REDDEDİLDİ',
             subtitle: _result!.durum,
             hashCode_: _result!.hashKodu,
+            confidence: _result!.guvenOrani,
           ),
 
         const SizedBox(height: AppSpacing.md),
