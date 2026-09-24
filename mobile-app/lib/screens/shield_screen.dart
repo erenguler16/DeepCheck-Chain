@@ -10,7 +10,7 @@ import '../widgets/scanning_overlay.dart';
 import '../widgets/neon_result_card.dart';
 import '../widgets/glass_card.dart';
 
-// FOTOĞRAF MÜHÜRLEME
+// Fotoğraf Mühürleme
 
 class ShieldScreen extends StatefulWidget {
   final void Function(String hash)? onNavigateToVerify;

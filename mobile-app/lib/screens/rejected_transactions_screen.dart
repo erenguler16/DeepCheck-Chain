@@ -6,11 +6,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../core/constants.dart';
 import '../widgets/glass_card.dart';
 
-// ═══════════════════════════════════════════════════════════════════
-// GEÇERSİZ / REDDEDİLEN İŞLEMLER SAYFASI (ZERO-TRUST AUDIT LOG)
 // AI tarafından sahte/derin sahtecilik tespit edilip blokzincirine
 // mühürlenmesi engellenen şüpheli işlemler bu ekranda listelenir.
-// ═══════════════════════════════════════════════════════════════════
 
 class RejectedTransactionsScreen extends StatefulWidget {
   const RejectedTransactionsScreen({super.key});

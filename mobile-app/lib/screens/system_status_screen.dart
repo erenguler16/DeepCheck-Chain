@@ -5,9 +5,7 @@ import '../services/api_service.dart';
 import '../widgets/radar_painter.dart';
 import '../widgets/glass_card.dart';
 
-// ═══════════════════════════════════════════════════════════════════
-// SAYFA 3: SİSTEM DURUMU – Radar ve Ağ Doğrulama
-// ═══════════════════════════════════════════════════════════════════
+// Sistem Durumu – Radar ve Ağ Doğrulama
 
 class SystemStatusScreen extends StatefulWidget {
   const SystemStatusScreen({super.key});

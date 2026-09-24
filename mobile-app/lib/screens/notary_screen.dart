@@ -7,11 +7,8 @@ import '../core/constants.dart';
 import '../widgets/hash_text_animator.dart';
 import 'rejected_transactions_screen.dart';
 
-// ═══════════════════════════════════════════════════════════════════
-// SAYFA 2: DİJİTAL NOTER – Blockchain Explorer
 // Mühürlenmiş hash'lerin siber log/geçmiş sayfası
-// SORGULA butonu → Sorgula sayfasına yönlendirir (inline sonuç yok)
-// ═══════════════════════════════════════════════════════════════════
+
 
 class NotaryScreen extends StatefulWidget {
   final void Function(String hash)? onNavigateToVerify;

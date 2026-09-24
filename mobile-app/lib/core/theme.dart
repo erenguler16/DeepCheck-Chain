@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'constants.dart';
 
-// ═══════════════════════════════════════════════════════════════════
-// DEEPCHECK-CHAIN DARK CYBERPUNK TEMA
-// ═══════════════════════════════════════════════════════════════════
+// DEEPCHECK-CHAIN Tema
 
 class AppTheme {
   AppTheme._();

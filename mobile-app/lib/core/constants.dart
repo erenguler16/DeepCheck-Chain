@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 
-// ═══════════════════════════════════════════════════════════════════
-// DEEPCHECK-CHAIN TASARIM SİSTEMİ
-// Konsept: "Sıfır Güven Dünyasında, Gerçeğin Sarsılmaz Zinciri"
-// ═══════════════════════════════════════════════════════════════════
+// DEEPCHECK-CHAIN Tasarım Sistemi
 
 class AppColors {
   AppColors._();
