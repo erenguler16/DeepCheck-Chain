@@ -1,8 +1,3 @@
-// ═══════════════════════════════════════════════════════════════════
-// ANALİZ SONUÇ MODELİ
-// Backend'den dönen JSON response'u parse eder.
-// ═══════════════════════════════════════════════════════════════════
-
 class AnalysisResult {
   final String durum;
   final String? hashKodu;

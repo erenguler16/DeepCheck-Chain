@@ -8,10 +8,8 @@ import '../models/analysis_result.dart';
 import '../services/api_service.dart';
 import '../widgets/glass_card.dart';
 
-// ═══════════════════════════════════════════════════════════════════
-// SAYFA: BLOKZİNCİRİ SORGULAMA – Hash Doğrulama & Kayıt Kontrolü
-// "Kayıtlı" veya "Kayıtsız" sonucunu gösterir.
-// ═══════════════════════════════════════════════════════════════════
+// Blokzinciri Sorgulama – Hash Doğrulama & Kayıt Kontrolü
+
 
 class VerifyScreen extends StatefulWidget {
   final String? initialHash;

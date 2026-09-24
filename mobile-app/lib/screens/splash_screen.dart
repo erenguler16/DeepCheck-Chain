@@ -3,12 +3,7 @@ import 'package:flutter/material.dart';
 import '../core/constants.dart';
 import 'main_shell.dart';
 
-// ═══════════════════════════════════════════════════════════════════
-// SPLASH SCREEN – Blokzincir Küp Birleşme Animasyonu
-// Teknofest Blokzincir Logosu Konsepti:
-// Etraftan gelen küçük küpler ekranın merkezinde birleşerek
-// parlayan izometrik bir blokzincir amblemine dönüşür.
-// ═══════════════════════════════════════════════════════════════════
+// Blokzincir Küp Birleşme Animasyonu
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

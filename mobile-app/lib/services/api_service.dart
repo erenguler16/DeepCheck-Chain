@@ -4,11 +4,7 @@ import 'package:http/http.dart' as http;
 import '../core/api_config.dart';
 import '../models/analysis_result.dart';
 
-// ═══════════════════════════════════════════════════════════════════
 // API SERVİS KATMANI
-// Tüm HTTP istekleri bu sınıf üzerinden yapılır.
-// Ngrok header'ları otomatik eklenir.
-// ═══════════════════════════════════════════════════════════════════
 
 class ApiService {
   ApiService._();

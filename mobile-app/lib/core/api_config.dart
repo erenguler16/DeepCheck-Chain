@@ -1,12 +1,9 @@
-// ═══════════════════════════════════════════════════════════════════
 // API YAPILANDIRMASI – Ngrok üzerinden FastAPI haberleşme
-// ═══════════════════════════════════════════════════════════════════
 
 class ApiConfig {
   ApiConfig._();
 
   /// Ngrok üzerinden erişilen FastAPI sunucu adresi.
-  /// Güncelleme: Bu adresi ngrok her başlatıldığında değiştir.
   static const String baseUrl = 'https://promptly-handheld-pureblood.ngrok-free.dev';
 
   /// Tüm HTTP isteklerine eklenecek ortak header'lar.

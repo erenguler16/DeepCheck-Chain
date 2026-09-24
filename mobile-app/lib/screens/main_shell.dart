@@ -6,9 +6,7 @@ import 'verify_screen.dart';
 import 'notary_screen.dart';
 import 'system_status_screen.dart';
 
-// ═══════════════════════════════════════════════════════════════════
-// ANA KABUK – Bottom Navigation Bar + 4 Sayfa Yönetimi
-// ═══════════════════════════════════════════════════════════════════
+// Bottom Navigation Bar + 4 Sayfa Yönetimi
 
 class MainShell extends StatefulWidget {
   const MainShell({super.key});
