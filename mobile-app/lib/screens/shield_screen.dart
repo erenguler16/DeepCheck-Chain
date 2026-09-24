@@ -10,10 +10,7 @@ import '../widgets/scanning_overlay.dart';
 import '../widgets/neon_result_card.dart';
 import '../widgets/glass_card.dart';
 
-// ═══════════════════════════════════════════════════════════════════
-// SAYFA 1: FOTOĞRAF MÜHÜRLEME (Kalkan)
-// Siber Vizör Tasarımı: Kamera ve Galeri Uyumlu Seçici
-// ═══════════════════════════════════════════════════════════════════
+// FOTOĞRAF MÜHÜRLEME
 
 class ShieldScreen extends StatefulWidget {
   final void Function(String hash)? onNavigateToVerify;

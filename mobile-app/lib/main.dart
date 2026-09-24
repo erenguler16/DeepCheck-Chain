@@ -3,13 +3,6 @@ import 'package:flutter/services.dart';
 import 'core/theme.dart';
 import 'screens/splash_screen.dart';
 
-// ═══════════════════════════════════════════════════════════════════
-// DEEPCHECK-CHAIN
-// "Sıfır Güven Dünyasında, Gerçeğin Sarsılmaz Zinciri"
-//
-// TEKNOFEST · Dijital Noter & Deepfake Dedektörü
-// FastAPI + Hyperledger Fabric + AI (CNN/ViT)
-// ═══════════════════════════════════════════════════════════════════
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
