@@ -48,24 +48,46 @@ class ApiService {
   /// [GET /]
   static Future<HealthStatus> checkHealth() async {
     try {
+      final url = ApiConfig.healthCheck;
+      final uri = Uri.parse(url.endsWith('/') ? url : '$url/');
+
       final response = await http
           .get(
-            Uri.parse(ApiConfig.healthCheck),
+            uri,
             headers: ApiConfig.defaultHeaders,
           )
-          .timeout(const Duration(seconds: 8));
+          .timeout(const Duration(seconds: 10));
 
-      if (response.statusCode == 200) {
-        final data = jsonDecode(utf8.decode(response.bodyBytes));
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        String message = 'Sunucu aktif ve hazır';
+        try {
+          final decoded = jsonDecode(utf8.decode(response.bodyBytes));
+          if (decoded is Map) {
+            message = decoded['mesaj'] as String? ??
+                decoded['message'] as String? ??
+                decoded['status'] as String? ??
+                'Sunucu aktif';
+          } else if (decoded is List && decoded.isNotEmpty) {
+            message = decoded.first.toString();
+          } else if (decoded is String && decoded.isNotEmpty) {
+            message = decoded;
+          }
+        } catch (_) {
+          final raw = utf8.decode(response.bodyBytes).trim();
+          if (raw.isNotEmpty && !raw.startsWith('<')) {
+            message = raw;
+          }
+        }
+
         return HealthStatus(
           isOnline: true,
-          message: data['mesaj'] as String? ?? 'Sunucu aktif',
+          message: message,
           responseTimeMs: 0, // will be set by caller
         );
       }
       return HealthStatus(
         isOnline: false,
-        message: 'HTTP ${response.statusCode}',
+        message: 'HTTP ${response.statusCode}: Sunucu yanıt vermedi',
       );
     } catch (e) {
       return HealthStatus(

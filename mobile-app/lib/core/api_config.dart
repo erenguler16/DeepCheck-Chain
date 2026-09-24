@@ -7,7 +7,7 @@ class ApiConfig {
 
   /// Ngrok üzerinden erişilen FastAPI sunucu adresi.
   /// Güncelleme: Bu adresi ngrok her başlatıldığında değiştir.
-  static const String baseUrl = 'https://GUNCEL_NGROK_ADRESI.ngrok-free.app';
+  static const String baseUrl = 'https://promptly-handheld-pureblood.ngrok-free.dev';
 
   /// Tüm HTTP isteklerine eklenecek ortak header'lar.
   /// [ngrok-skip-browser-warning] → Ngrok uyarı sayfasını atlar.
