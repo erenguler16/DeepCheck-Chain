@@ -45,6 +45,9 @@ class _MainShellState extends State<MainShell> {
         return VerifyScreen(
           key: ValueKey(_verifyInitialHash ?? 'verify_screen_default'),
           initialHash: _verifyInitialHash,
+          onInitialHashConsumed: () {
+            _verifyInitialHash = null;
+          },
         );
       case 2:
         return NotaryScreen(
@@ -179,7 +182,14 @@ class _MainShellState extends State<MainShell> {
       ),
       child: BottomNavigationBar(
         currentIndex: _selectedIndex,
-        onTap: (index) => setState(() => _selectedIndex = index),
+        onTap: (index) {
+          setState(() {
+            if (index == 1 && _selectedIndex != 1) {
+              _verifyInitialHash = null;
+            }
+            _selectedIndex = index;
+          });
+        },
         backgroundColor: Colors.transparent,
         selectedItemColor: AppColors.gold,
         unselectedItemColor: AppColors.textMuted,

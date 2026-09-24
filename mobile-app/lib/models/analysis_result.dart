@@ -41,13 +41,19 @@ class AnalysisResult {
   bool get isSuccess => durum.contains('BAŞARILI') || durum.contains('BASARILI');
 
   /// AI analizi "Gerçek" mi döndü?
-  bool get isAuthentic =>
-      aiSonucu?.toLowerCase() == 'gercek' ||
-      aiSonucu?.toLowerCase() == 'gerçek';
+  bool get isAuthentic {
+    final s = aiSonucu?.toLowerCase().trim() ?? '';
+    return s.contains('gercek') ||
+        s.contains('gerçek') ||
+        s.contains('authentic') ||
+        s.contains('real');
+  }
 
   /// AI analizi "Sahte" mi döndü?
-  bool get isFake =>
-      aiSonucu?.toLowerCase() == 'sahte';
+  bool get isFake {
+    final s = aiSonucu?.toLowerCase().trim() ?? '';
+    return s.contains('sahte') || s.contains('fake');
+  }
 }
 
 /// Blokzinciri doğrulama sorgusunun sonucu.
@@ -92,6 +98,31 @@ class VerifyResult {
         d.contains('GEÇERSİZ') ||
         d.contains('GECERSIZ') ||
         !isRegistered;
+  }
+
+  /// Blokzinciri kaydındaki AI sonucu (camelCase veya snake_case desteği)
+  String? get aiResult {
+    if (veri == null) return null;
+    return veri!['aiResult'] as String? ??
+        veri!['ai_result'] as String? ??
+        veri!['aiSonucu'] as String? ??
+        veri!['ai_sonucu'] as String? ??
+        veri!['ai_analiz_sonucu'] as String?;
+  }
+
+  /// AI analizi "Sahte" (Deepfake) mi?
+  bool get isFake {
+    final ai = aiResult?.toLowerCase().trim() ?? '';
+    return ai.contains('sahte') || ai.contains('fake');
+  }
+
+  /// AI analizi "Gerçek" mi?
+  bool get isAuthentic {
+    final ai = aiResult?.toLowerCase().trim() ?? '';
+    return ai.contains('gercek') ||
+        ai.contains('gerçek') ||
+        ai.contains('real') ||
+        ai.contains('authentic');
   }
 
   bool get isFound => isRegistered;
